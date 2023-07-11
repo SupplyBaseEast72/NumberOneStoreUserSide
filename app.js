@@ -10,7 +10,7 @@ const { requestLogger, errorHandler } = require("./utils/middleware");
 
 // set up the configuration to access the DB
 mongoose.set("strictQuery", false);
-(async () => {
+info(`Attempting to connect to MongoDB`)(async () => {
   await mongoose.connect(mongoUrl);
   info(`Connected to MongoDB`);
 })();
