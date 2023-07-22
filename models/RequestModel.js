@@ -9,17 +9,26 @@ const requestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  requestedItems: {
-    type: Object,
+  number: {
+    type: String,
     required: true,
   },
+  unit: {
+    type: String,
+    required: true,
+  },
+  requestedItems: [
+    {
+      type: Object,
+    },
+  ],
   sizingDate: {
     type: String,
     required: true,
   },
-  loanRequestId: {
+  status: {
     type: String,
-    required: true,
+    default: "Pending",
   },
 });
 

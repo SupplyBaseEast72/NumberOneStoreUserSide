@@ -10,9 +10,12 @@ const requestLogger = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-  error(err.name, err.message);
   // type of error can be found in err.name
-  next(err);
+  return res.status(200).send(JSON.stringify(err));
+  // if (err.name === "CastError") {
+  //   return res.status(404).send("Sadge");
+  // }
+  return res.status(404).send(err);
 };
 
 module.exports = { requestLogger, errorHandler };

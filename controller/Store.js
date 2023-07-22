@@ -9,6 +9,12 @@ storeRouter.get("/", async (req, res) => {
   res.status(200).json(storeItems);
 });
 
+// fetch a list of an item with a specific ID
+storeRouter.get("/:id", async (req, res) => {
+  const storeItem = await Store.findById(req.params.id);
+  res.status(200).json(storeItem);
+});
+
 // add a new item to the storeDB. returns the newly added item
 storeRouter.post("/", async (req, res) => {
   const newEntry = new Store(req.body);
