@@ -8,6 +8,30 @@ requestRouter.get("/", async (req, res) => {
   res.status(200).send(requests);
 });
 
+// get a list of requests, sorted by their status
+requestRouter.get("/filteredRequests", async (req, res) => {
+  const requestArray = [
+    Request.find({ status: "Pending" }),
+    Request.find({ status: "Awaiting Sizing" }),
+    Request.find({
+      $or: [{ status: "Awaiting Return" }, { status: "Incomplete Return" }],
+    }),
+    Request.find({ status: "Return Complete" }),
+  ];
+  const [
+    sizingRequests,
+    sizingAppointments,
+    returnAppointments,
+    completedReturns,
+  ] = await Promise.all(requestArray);
+  res.status(200).json({
+    sizingReq: sizingRequests,
+    sizingAppt: sizingAppointments,
+    returnAppt: returnAppointments,
+    completeRtn: completedReturns,
+  });
+});
+
 // find a single request
 requestRouter.get("/:id", async (req, res) => {
   const requestId = req.params.id;
@@ -36,8 +60,8 @@ requestRouter.put("/:id", async (req, res) => {
   const updatedRequest = req.body;
   const savedRequest = await Request.findByIdAndUpdate(
     req.params.id,
-    updatedRequest
-    // { new: true, runValidators: true }
+    updatedRequest,
+    { new: true }
   );
   res.status(200).send(savedRequest);
 });

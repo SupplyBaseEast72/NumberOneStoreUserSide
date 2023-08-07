@@ -7,6 +7,7 @@ const { info } = require("./utils/logger");
 const storeRouter = require(".//controller/Store");
 const requestRouter = require(".//controller/Request");
 const emailRouter = require("./controller/Email");
+const calendarRouter = require("./controller/Calendar");
 const { requestLogger, errorHandler } = require("./utils/middleware");
 
 // set up the configuration to access the DB
@@ -26,6 +27,7 @@ app.use(express.static("build"));
 app.use("/api/store", storeRouter);
 app.use("/api/request", requestRouter);
 app.use("/api/email", emailRouter);
+app.use("/api/calendar", calendarRouter);
 
 // error handling packages
 app.use(errorHandler);
