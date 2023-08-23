@@ -6,7 +6,16 @@ const Store = require("../models/StoreModel");
 // fetch a list of all the store items
 storeRouter.get("/", async (req, res) => {
   const storeItems = await Store.find({});
-  res.status(200).json(storeItems);
+  const sizedItems = [];
+  const items = [];
+  storeItems.forEach((storeItem) => {
+    if (storeItem.name.includes(" - ")) {
+      sizedItems.push(storeItem);
+    } else {
+      items.push(storeItem);
+    }
+  });
+  res.status(200).json({ items, sizedItems });
 });
 
 // fetch a list of an item with a specific ID

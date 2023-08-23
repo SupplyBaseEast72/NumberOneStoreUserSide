@@ -50,7 +50,10 @@ requestRouter.get("/:id", async (req, res) => {
 
 // add a new request
 requestRouter.post("/", async (req, res) => {
-  const newRequest = new Request(req.body);
+  const newRequest = new Request({
+    ...req.body,
+    originalQuantity: req.body.quantity,
+  });
   const savedRequest = await newRequest.save();
 
   res.status(201).send(savedRequest);
